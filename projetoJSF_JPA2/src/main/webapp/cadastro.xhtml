@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="UTF-8" name="viewport"
+		content="width-device-width, initial-scale=1"
+		http-equiv="X-UA-Compatible" />
+	<title>CRUD JSF e JPA</title>
+</h:head>
+
+
+<h:body>
+	<h2>
+		<h:outputLabel value="Lista de clientes" />
+	</h2>
+
+	<h:form id="cadastro_Clientes">
+
+        <p:menubar>
+            <p:submenu label="Manutenção cadastros">
+                <p:menuitem value="Cliente"/>
+            </p:submenu>
+
+            <p:submenu label="Relatórios">
+                <p:menuitem value="Todos os clientes"/>
+            </p:submenu>
+
+        </p:menubar>
+        
+        <br/>
+
+
+		<p:fieldset legend="Cadastro de clientes">
+
+			<div class="card">
+
+				<p:panelGrid columns="2" layout="grid"
+					columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4, p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+					styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+
+					<h:outputLabel for="id" value="Id" />
+					<p:inputText id="id" 
+								value="#{clienteBean.cliente.id}"
+								placeholder="Id do cliente"
+								disabled="true"
+								autocomplete="off"
+								width="80px">
+					</p:inputText>
+					
+					<h:outputLabel for="nome" value="Nome" />
+					<p:inputText id="nome" 
+								value="#{clienteBean.cliente.nome}"
+								placeholder="Nome do cliente"
+								autocomplete="off">
+					</p:inputText>
+
+					<h:outputLabel for="sobrenome" value="Sobrenome" />
+					<p:inputText id="sobrenome"
+								value="#{clienteBean.cliente.sobrenome}"
+								placeholder="Sobrenome do cliente" 
+								autocomplete="off">
+					</p:inputText>
+
+					<h:outputLabel for="endereco" value="Endereco" />
+					<p:inputText id="endereco"
+								value="#{clienteBean.cliente.endereco}"
+								placeholder="Endereco do cliente" 
+								autocomplete="off">
+					</p:inputText>
+
+					<p:outputLabel for="email" value="Email" />
+					<p:inputText type="email"
+					id="email"
+								value="#{clienteBean.cliente.email}"
+								placeholder="Email do cliente" 
+								autocomplete="off">
+					</p:inputText>
+
+					<p:outputLabel for="telefone" value="Telefone" />
+					<p:inputText id="telefone"
+								value="#{clienteBean.cliente.telefone}"
+								placeholder="Telefone do cliente" 
+								autocomplete="off">
+				    </p:inputText>
+		</p:panelGrid>
+				<p:commandButton id="btnInserir" value="Inserir"
+						style="
+                                 color: white;
+                                 background: green;
+                                 border: 1px green"
+						action="#{clienteBean.inserir()}" update="cadastro_Clientes">
+					</p:commandButton>
+					
+					
+					
+					<p:commandButton id="btnListar" value="Listar"
+						style="
+                                 color: white;
+                                 background: blue;
+                                 border: 1px blue"
+						action="#{clienteBean.listarClientes()}" update="cadastro_Clientes">
+					</p:commandButton>
+				
+					
+			</div>
+		</p:fieldset>
+
+
+		<p:fieldset legend="Lista clientes" toggleable="true"
+			toggleSpeed="500">
+			
+			<p:dataTable value="#{clienteBean.lista}" var="cliente"
+				scrollable="true" scrollHeight="350" id="tabela">
+
+				<p:column headerText="Id" sortBy="#{cliente.id}">
+					<h:outputText value="#{cliente.id}"></h:outputText>
+				</p:column>
+	
+				<p:column headerText="Nome" sortBy="#{cliente.nome}">
+					<h:outputText value="#{cliente.nome}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Sobrenome" sortBy="#{cliente.sobrenome}">
+					<h:outputText value="#{cliente.sobrenome}"></h:outputText>
+				</p:column>
+
+				<p:column headerText="Telefone" sortBy="#{cliente.telefone}">
+					<h:outputText value="#{cliente.telefone}"></h:outputText>
+				</p:column>
+				
+				<p:column headerText="Endereco" sortBy="#{cliente.endereco}">
+					<h:outputText value="#{cliente.endereco}"></h:outputText>
+				</p:column>
+				
+				<p:column headerText="email" sortBy="#{cliente.email}">
+					<h:outputText value="#{cliente.email}"></h:outputText>
+				</p:column>
+				
+				<p:column headerText=" ">
+					<p:commandButton id="btnEditar" value="Editar"
+						style="
+                                 color: white;
+                                 background: orange;
+                                 border: 1px orange"
+						action="#{clienteBean.editar(cliente)}" update="cadastro_Clientes">
+					</p:commandButton>
+				</p:column>
+				
+				<p:column headerText=" ">
+					<p:commandButton id="btnExcluir" value="Excluir" style=" color: white; background: red; border: 1px red" action="#{clienteBean.excluir(cliente.getId())}" update="cadastro_Clientes">
+					</p:commandButton>
+				</p:column>
+				
+				
+			</p:dataTable>
+			
+		</p:fieldset>
+	</h:form>
+
+</h:body>
+</html>
